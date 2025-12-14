@@ -1,0 +1,113 @@
+<table class="coursetable">
+    <tr>
+        <td width="40%">
+            {{ course.get_major().get_name() }} {{ course.get_coursenum() }} - {{ course.get_title() }}
+        </td>
+        <td width="40%">
+            {% if not current_user.is_enrolled(course) %}
+            <form action="{{ url_for('main.enroll', course_id=course.id) }}" method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value="Enroll", class='btn btn-outline-success border-2 col-3') }}
+            </form>
+            {% else %}
+            <form action="{{ url_for('main.unenroll', course_id=course.id) }}" method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value="Unenroll", class='btn btn-outline-danger border-2 col-3') }}
+            </form>
+            Enrolled on {{ moment(current_user.get_enrolment_date(course)).format('LL') }}
+            {% endif %}
+        </td>
+        <td width="20%">
+            <button class="btn btn-secondary col-15" onclick="get_roster('{{ course.id }}')"> 
+                {{ course.get_major().get_name() }} {{ course.get_coursenum() }} Roster
+            </button>
+        </td>
+    </tr>
+</table>
+
+<div id="roster-div-{{ course.id }}" style="display:none;">
+    <h2 id="rheader" class="bluetitle">
+        Class Roster: {{ course.get_major().get_name() }} {{ course.get_coursenum() }} - {{ course.get_title() }}
+    </h2>
+    <table id="rtable" class="studenttable">
+        <thead>
+            <tr valign="bottom">
+                <th width="20%">Name</th>
+                <th width="30%">Email</th>
+                <th width="30%">Address</th>
+                <th width="20%">Student Last Seen At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will be added here by JavaScript -->
+        </tbody>
+    </table>
+    <div class="left-align-div">
+        <button class="ebutton" onclick="close_roster('{{ course.id }}')"> Close</button>
+    </div>
+</div>
+
+{% block script %}
+<script>
+async function get_roster(course_id) {
+    const url = "{{ url_for('main.roster_data', course_id='0') }}".replace('0', course_id);
+    console.log("Fetching from URL:", url);  // Debug: Check the generated URL
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        console.log("Roster data:", json);  // Debug: Check the fetched data structure
+        build_roster(course_id, json);
+    } catch (error) {
+        console.error("Error fetching roster:", error.message);
+    }
+}
+
+function build_roster(course_id, data) {
+    let parent_div = document.getElementById(`roster-div-${course_id}`);
+    let header = parent_div.querySelector("#rheader");
+    header.textContent = `${data['course_major']} ${data['course_num']} - ${data['course_title']}`;
+   
+    let rtable = parent_div.querySelector("#rtable tbody");
+    rtable.innerHTML = "";  // Clear previous rows
+
+    for (let i = 0; i < data['student_count']; i++) {
+        let tr_elem = document.createElement("tr");
+        tr_elem.vAlign = "middle";
+
+        let td_name = document.createElement("td");
+        td_name.textContent = `${data['students'][i]['firstname']} ${data['students'][i]['lastname']}`;
+        tr_elem.appendChild(td_name);
+
+        let td_email = document.createElement("td");
+        td_email.textContent = `${data['students'][i]['email']}`;
+        tr_elem.appendChild(td_email);
+
+        let td_address = document.createElement("td");
+        td_address.textContent = `${data['students'][i]['address']}`;
+        tr_elem.appendChild(td_address);
+
+        let td_date = document.createElement("td");
+        td_date.textContent = `${utc_to_local(data['students'][i]['last_seen'])}`;
+        tr_elem.appendChild(td_date);
+
+        rtable.appendChild(tr_elem);
+    }
+
+    parent_div.style.display = "block";  // Show the roster div
+}
+
+function close_roster(course_id) {
+    let parent_div = document.getElementById(`roster-div-${course_id}`);
+    parent_div.style.display = "none";  // Hide the roster div
+}
+
+function utc_to_local(cdate) {
+    var d = new Date(cdate);  // Use cdate as the parameter
+    return d.toLocaleString();
+}
+</script>
+{% endblock %}

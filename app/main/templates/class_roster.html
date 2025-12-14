@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="bluetitle"> Class Roster: {{ course.get_major().get_name() }} {{ course.get_coursenum() }} - {{ course.get_title() }}</h2>
+    <table class="studenttable">
+        <thead>
+            <tr valign="bottom">
+                <th width="20%">Name</th>
+                <th width="30%">Email</th>
+                <th width="30%">Address</th>
+                <th width="20%">Student Last Seen At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enrollment in enrollments %}
+                {% set student = enrollment.get_student() %}
+                {% include '_student.html' %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No students found for this major.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr class="solid">
+    <a href="{{ url_for('main.index') }}" class="button">Return to main page!</a>
+{% endblock %}

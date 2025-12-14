@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Display Student Profile</h1>
+<div class = "border rounded-3 bg-light p-3">
+	<h2>Student username: {{student.get_username()}}</h2>
+	<b>Name:</b>
+	{% if student.get_firstname() %}
+    	{{student.get_firstname()}}
+	{% endif %}
+	{% if student.get_lastname() %}
+    	{{student.get_lastname()}}
+	{% endif %}
+	<p><b>Email:</b>
+	{% if student.get_email() %}
+    	{{student.get_email()}}
+	{% endif %}
+	</p>
+	<p><b>Address:</b>
+	{% if student.get_address() %}
+    	{{student.get_address()}}
+	{% endif %}
+	</p>
+	<p><b>Last Seen:</b>
+	{% if student.get_last_seen_date() %}
+    	{{moment(student.get_last_seen_date()).format('LLL')}}
+	{% endif %}
+	</p>
+	<hr>
+    
+	{% if student.get_majors() %}
+	<b>Major: </b>
+	{% for major in student.get_majors() %}
+    	<a href="{{url_for('main.get_students_in_major', major_id = major.id)}}" class="btn btn-outline-info">
+        	{{major.get_name()}}
+    	</a>&nbsp;
+	{% endfor %}
+	{% else %}
+	<p> Student is not associated with any majors! </p>
+	{% endif %}
+
+</div>
+
+{% if student.id == current_user.id %}
+	<p><a href="{{ url_for('main.edit_profile') }}" class="btn btn-primary mt-3">Edit your profile</a></p>
+{% endif %}
+
+<hr class="solid">
+
+{% if student.enrolled_courses() %}
+	<p><b>Enrolled Courses:</b></p>
+	{% for enrollment in student.enrolled_courses() %}
+    	{% set course = enrollment.get_course() %}
+    	{% include "_course.html" %}
+	{% endfor %}
+{% else %}
+	<p>Student is not enrolled in any courses!</p>
+{% endif %}
+
+<hr>
+
+
+
+{% endblock %}
+
+
+

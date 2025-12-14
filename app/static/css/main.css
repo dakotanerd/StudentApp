@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    padding: 1em;
+    font-family: Tahoma, sans-serif; /* Added sans-serif fallback */
+    font-size: 18px;
+}
+
+.nav-container {
+    background: #f6f6f6;
+    font-family: Tahoma, sans-serif; /* Added sans-serif fallback */
+    font-size: 12px;
+    height: 32px;
+    text-transform: uppercase;
+}
+
+a:hover {
+    color: #2387d9; /* Link hover color */
+}
+
+.button {
+    width: 80px;
+    font-size: 18px;
+    margin: 10px 5px 5px 0;
+    padding: 5px;
+    border: 1px solid gray;
+    cursor: pointer; /* Adding cursor for better UX */
+}
+
+.button:hover {
+    background-color: #157dd3; /* Valid hex for hover effect */
+    color: white;
+}
+
+.ebutton {
+    width: 80px;
+    font-size: 18px;
+    margin: 10px 5px 5px 0;
+    padding: 5px;
+    border: 1px solid gray;
+    background-color: lightgreen;
+}
+
+.ebutton:hover {
+    background-color: green; /* Hover effect for enrollment button */
+    color: white;
+}
+
+.textinput {
+    padding: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    width: 400px;
+}
+
+.flash-container {
+    background: lightskyblue;
+    font-family: Tahoma, sans-serif; /* Added sans-serif fallback */
+    font-size: 16px;
+    padding: 25px;
+    margin: 10px 0;
+}
+
+.useritem {
+    text-align: center;
+    padding: 3px;
+    margin: 4px 3px;
+    color: crimson;
+    text-transform: uppercase;
+}
+
+.coursetable tr:hover {
+    background-color: lightgray;
+}
+
+.coursetable {
+    text-align: left;
+    border: 1px black solid;
+    width: 100%;
+    font-size: 18px;
+}
+
+.studenttable {
+    text-align: left;
+    width: 95%;
+    font-size: 18px; /* Check the hierarchy for the desired size */
+}
+
+.studenttable tr {
+    outline: thin rgb(216, 216, 216) solid;
+    background-color: rgb(240, 240, 240);
+}
+
+.studenttable tr:hover {
+    background-color: rgb(192, 207, 235);
+}
+
+h2.crimsontitle {
+    font-size: 30px; /* Corrected size */
+    color: rgb(139, 33, 54);
+}
+
+h2.bluetitle {
+    font-size: 30px; /* Corrected from '30pc' to '30px' */
+    color: rgb(39, 42, 226);
+	margin: 10px 0px 5px 0px;
+}
+
+h3.bluetitle {
+    font-size: 20px; /* This looks fine */
+    color: rgb(39, 42, 226);
+}
+
+.left-align-div {
+    width: 95%; /* Full width to allow alignment */
+    display: flex; /* Enable flexbox */
+    justify-content: flex-end; /* Align items to the right */
+    margin-top: 10px; /* Space above the button */
+	margin: 0px 0px 10px 0px;
+}
+
+/* This is optional and can be kept for consistency */
+.flex-container {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    width: 80%; /* Ensure it takes full width of the parent */
+}
+
+
+.btn-outline-info {
+	color: #1a1b1b;
+}
+
+.btn-outline-success {
+	white-space: normal;
+	padding: 3px 0px 3px 0px;
+	margin: 10px 0px 10px 0px;
+}
+
+.btn-outline-danger{
+	white-space: normal;
+	padding: 3px 0px 3px 0px;
+}
+

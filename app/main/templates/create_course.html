@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+<h1> Create a new class</h1>
+
+<form action = "" method = "POST">
+	{{ form.hidden_tag() }}
+	{{wtf.form_field(form.major)}}
+	{{wtf.form_field(form.coursenum)}}
+	{{wtf.form_field(form.title)}}
+	{{wtf.form_field(form.submit)}}
+</form>
+
+{% endblock %}
+
+
+
+

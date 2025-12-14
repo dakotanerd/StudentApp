@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+    <h1>Hello, student!</h1>
+
+    {% for course in courses %}
+        {% include '_course.html'%}
+    {% endfor %}
+    
+    <hr>
+
+    <!-- {% for student in students %}
+    -- {{student.get_username()}} {{student.get_firstname()}}  {{student.get_lastname()}} {{student.get_email()}} {{student.get_last_seen_date()}}
+    <br>
+    {% endfor %} -->
+
+
+
+
+{% endblock %}
+

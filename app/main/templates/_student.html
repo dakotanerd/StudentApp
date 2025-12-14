@@ -1,0 +1,7 @@
+<tr>
+    <td>{{ student.get_firstname() }} {{ student.get_lastname() }}</td>
+    <td>{{ student.get_email() }}</td>
+    <td>{{ student.get_address() }}</td>
+    <td><span style="white-space: nowrap;">{{ moment(student.get_last_seen_date()).format('LLL') or "Not available" }}</span></td>
+
+</tr>
